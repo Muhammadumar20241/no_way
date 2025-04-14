@@ -1,25 +1,69 @@
-from flask import Flask, request
+
 import telebot
+from telebot import types
 
-TOKEN = '7948796136:AAF3Wja3B1L3gPkHs2_jPjsNyjSW12Z1XpE'
-bot = telebot.TeleBot(TOKEN)
+
+from flask import Flask, request
 app = Flask(__name__)
+application = app
 
-@app.route('/', methods=['GET'])
-def index():
-    return "Bot is running."
 
-@app.route(f'/{TOKEN}', methods=['POST'])
+
+
+
+@app.route("/bot", methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200
+        
+@app.route("/")
 def webhook():
-    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
-    bot.process_new_updates([update])
-    return '', 200
+    bot.remove_webhook()
+    bot.set_webhook(url="https://bot.muhammadumarkoziev.uz/bot") 
+    return "!", 200
 
-@bot.message_handler(commands=['start'])
-def start(message):
-    bot.send_message(message.chat.id, "Hello, I am alive!")
+BOT_TOKEN = '7948796136:AAF3Wja3B1L3gPkHs2_jPjsNyjSW12Z1XpE'
 
-# Set webhook
-import requests
-bot.remove_webhook()
-bot.set_webhook(url=f'https://Muhammadumar20241/no_way/{TOKEN}')
+bot = telebot.TeleBot(BOT_TOKEN)
+
+
+
+
+@bot.message_handler(commands =['start'])
+def main(message):
+    
+    markup1 =types.ReplyKeyboardMarkup(resize_keyboard =True)
+    btn1 =types.KeyboardButton("📜Listings")
+    btn2 =types.KeyboardButton("🏠Housing")
+    markup1.row(btn1)
+    markup1.row(btn2)
+    
+    
+    
+    bot.send_message(message.chat.id, "🌚Hello\n🌝This is bot for posting rent houses", reply_markup=markup1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == "__main__":
+   bot.polling(none_stop=True)
+
+
+
+
+
+
+
+
+
+
