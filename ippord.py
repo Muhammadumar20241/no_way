@@ -4,7 +4,7 @@
 
 import telebot
 from telebot import types
-bot =telebot.TeleBot("7031061809:AAGM-bISo7PJFxz6q1YQ3HR4a6eVgNnKdxI")
+bot =telebot.TeleBot("7948796136:AAF3Wja3B1L3gPkHs2_jPjsNyjSW12Z1XpE")
 
 language ="en"
 
